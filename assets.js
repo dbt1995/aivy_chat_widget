@@ -4,6 +4,18 @@ export const styles = `
 ul li{
     list-style: none;
   }
+  #chat_first_screen{
+    background: red;
+    padding: 10px 15px;
+    border-radius: 15px;
+    color:white;
+    cursor:pointer;
+  }
+  #chat_first_screen_form label.error{
+    text-align: left;
+    color: red;
+    font-size: 12px;
+  }
   .fabs {
     bottom: 0;
     position: fixed;
@@ -361,7 +373,7 @@ ul li{
   }
   
   .chat_converse {
-    position: relative;
+    position: relative; 
       background: #fff;
       margin: 6px 0 0px 0;
       height: 300px;
@@ -371,7 +383,7 @@ ul li{
       overflow-y: auto;
       width: 100%;
       float: right;
-      padding-bottom: 100px;
+      // padding-bottom: 100px;
   }
   .chat_converse2{
         height: 100%;
@@ -390,8 +402,8 @@ ul li{
   
   .chat .chat_converse .chat_msg_item {
     position: relative;
-    margin: 8px 0 15px 0;
-    padding: 8px 10px;
+    margin: 6px 0 20px 0;
+    padding: 4px 11px;
     max-width: 60%;
     display: block;
     word-wrap: break-word;
@@ -761,6 +773,109 @@ ul li{
   :-moz-placeholder { /* Firefox 4 - 18 */
     color: #bbb;
   }
+
+
+
+  .widget__container * {
+    box-sizing: border-box;
+}        
+h3, p, input {
+    margin: 0;
+    padding: 0;
+}
+.widget__container {
+    box-shadow: 0 0 18px 8px rgba(0, 0, 0, 0.1), 0 0 32px 32px rgba(0, 0, 0, 0.08);
+    width: 400px;
+    overflow: auto;
+    right: -25px;
+    bottom: 75px;
+    position: absolute;
+    transition: max-height .2s ease;
+    font-family: Helvetica, Arial ,sans-serif;
+    background-color: #e6e6e6a6;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+.widget__icon {
+    cursor: pointer;
+    width: 60%;
+    position: absolute;
+    top: 18px;
+    left: 16px;
+    transition: transform .3s ease;
+}
+.widget__hidden {
+    transform: scale(0);
+}
+.button__container {
+    border: none;
+    background-color: #0f172a;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.widget__container.hidden {
+    max-height: 0px;
+}
+.widget__header {
+    padding: 1rem 2rem 1.5rem;
+    background-color: #000;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+}
+.widget__header h3 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 8px;
+}
+form {
+    padding: 1rem 1rem 0.5rem;
+}
+form .form__field {
+    margin-bottom: 0.7rem;
+    display: flex;
+    flex-direction: column;
+}
+.form__field label {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+.form__field input,
+.form__field textarea {
+    border: 1px solid #000000ad;
+    border-radius: 3px;
+    padding: 8px 10px;
+    background-color: #fff;
+}
+.form__field input {
+    height: 20px;
+}
+.form__field textarea::placeholder {
+    font-family: Helvetica, Arial ,sans-serif;
+}
+form button {
+    height: 48px;
+    border-radius: 6px;
+    font-size: 18px;
+    background-color: #000;
+    color: #fff;
+    border: 0;
+    width: 100%;
+    cursor: pointer;
+}
+form button:hover {
+    background-color: rgba(0, 0, 0, 95%);
+}
+
+
+
+
+
+
+
 `;
 
 export const MESSAGE_ICON = `
