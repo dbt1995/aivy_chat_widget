@@ -385,6 +385,10 @@ ul li{
       float: right;
       // padding-bottom: 100px;
   }
+  #chat_converse-box{
+    display: inline-block;
+    width: 100%;
+  }
   .chat_converse2{
         height: 100%;
       max-height: 800px

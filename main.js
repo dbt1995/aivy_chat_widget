@@ -72,6 +72,10 @@ class MessageWidget {
 }
 
   async initialize() {
+    var vmThis = this;
+
+    vmThis.currentGroup = null;
+
     /**
      * Create and append a div element to the document body
      */
@@ -183,7 +187,7 @@ async function firebaseConnect(user, existed=false){
           .add(group)
           .then(function (docRef) {
             group.id = docRef.id
-            vm.fetchGroupByUserID(user.uid)
+            vm.fetchGroupByUserID(user)
             resolve(group)
           })
           .catch(function (error) {
@@ -219,11 +223,26 @@ async function firebaseConnect(user, existed=false){
           })
       })
     },
-    fetchGroupByUserID(uid) {
+    fetchGroupByUserID(user) {
       const vm = this
         const groupRef = db.collection('group');
-        return groupRef.where('members', 'array-contains', uid)
-      .limit(1);
+        return groupRef.where('members', 'array-contains', {...user}) 
+      .onSnapshot((querySnapshot) => {
+        const allGroups = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data()
+          data.id = doc.id
+          // if (data.recentMessage) 
+          allGroups.push(data);
+        })
+        // iff
+        // vm.groups = allGroups
+        debugger
+        if (allGroups.length > 0){
+          vmThis.currentGroup = allGroups[0];
+        }
+      })
+;
       // return new Promise((resolve, reject) => {
       //   const groupRef = db.collection('group')
       //   groupRef
@@ -311,6 +330,44 @@ async function firebaseConnect(user, existed=false){
           })
         })
       },
+      
+    fetchGroupByIds(groupIds) {
+      const groups = []
+      const groupRef = db.collection('group')
+      groupIds.forEach(async (groupId) => {
+        await groupRef
+          .doc(groupId)
+          .get()
+          .then(function (doc) {
+            groups.push(doc.data())
+          })
+          .catch(function (error) {
+            // eslint-disable-next-line no-console
+            console.error('Error get document: ', error)
+          })
+      })
+      this.groups = groups
+    },
+    updateGroup(group) {
+      db.collection('group')
+        .doc(group.id)
+        .set(group)
+        .then(function (docRef) {})
+        .catch(function (error) {
+          // eslint-disable-next-line no-console
+          console.error('Error writing document: ', error)
+        })
+    },
+    addNewGroupToUser(user, groupId) {
+      const groups = user.groups ? user.groups : []
+      const existed = groups.filter((group) => group === groupId)
+      if (existed.length === 0) {
+        groups.push(groupId)
+        user.groups = groups
+        const userRef = db.collection('user')
+        userRef.doc(user.uid).set(user)
+      }
+    },
   }
 
   const messageFuncs = {
@@ -319,7 +376,7 @@ async function firebaseConnect(user, existed=false){
         const message = {
           messageText,
           sentAt,
-          sentBy: this.user.uid,
+          sentBy: vmThis.user.uid,
         }
         return new Promise((resolve, reject) => {
           db.collection('message')
@@ -336,8 +393,7 @@ async function firebaseConnect(user, existed=false){
       }
     },
     fetchMessagesByGroupId(groupId) {
-      const vm = this
-      vm.messages = []
+      vmThis.messages = []
       db.collection('message')
         .doc(groupId.trim())
         .collection('messages')
@@ -347,10 +403,34 @@ async function firebaseConnect(user, existed=false){
           querySnapshot.forEach((doc) => {
             if (doc) allMessages.push(doc.data())
           })
-          vm.messages = allMessages
-        })
-    },
-  }
+          vmThis.messages = allMessages
+          debugger
+          if (allMessages && allMessages.length > 0) {
+            $('#chat_converse-box').empty();
+            allMessages.forEach(message=>{
+              const messageElement = `<span class="${
+                vmThis.user.uid === message.sentBy ? "chat_msg_item chat_msg_item_user" : "chat_msg_item chat_msg_item_admin"
+              }">
+              
+              ${vmThis.user.uid === message.sentBy ? "" : '<div class="chat_avatar"> <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/> </div>'}
+              
+              ${message.messageText}</span>
+              
+              ${
+                vmThis.user.uid === message.sentBy ?  '<span class="status">20m ago</span>' : ""
+              }
+              `;
+              // append the message on the page
+              // document.getElementById("chat_converse").innerHTML += message;
+              $('#chat_converse-box').append(messageElement);
+                  })
+              }
+              
+              document
+              .getElementById("chat_converse-box")
+              .scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+                  })}
+                }
 
   const userFuncs = {
       fetchUsersByGroup(group) {
@@ -470,28 +550,23 @@ async function firebaseConnect(user, existed=false){
 
   const exist = await userFuncs.checkUserExisted(user)
   if (exist) {
-    var currentGroup = await groupFuncs.fetchGroupByUserID(user.uid).onSnapshot((querySnapshot) => {
-            const allGroups = []
-            debugger
-            querySnapshot.forEach((doc) => {
-              const data = doc.data()
-              data.id = doc.id
-              if (data.recentMessage) allGroups.push(data)
-            })
-            vm.groups = allGroups
-          })
-    debugger
+    
+    // const vm = this;
+    var currentGroup = await groupFuncs.fetchGroupByUserID(user)
   } else {
     authFuncs.saveUserToLocalStorage(user)
     userFuncs.saveUser(user)
     groupFuncs.createGroup([user], user, user.name, 'private')
   }
+  vmThis.user = user;
 
 
   setTimeout(async () => {
-    await messageFuncs.fetchMessagesByGroupId(this.currentGroup.id)
-    this.loading = false
-  }, 200)
+    debugger
+    await messageFuncs.fetchMessagesByGroupId(vmThis.currentGroup.id)
+    
+    vmThis.loading = false
+  }, 1000)
 
 
   // userFuncs.fetchUsers()
@@ -509,19 +584,46 @@ async function firebaseConnect(user, existed=false){
   // submit form
   // listen for submit event on the form and call the postChat function
   document.getElementById("fab_send").addEventListener("click", sendMessage);
+ $("#chatSend").keypress(function (e) {
+  var key = e.which;
+  if(key == 13)  // the enter key code
+   {
+    sendMessage(e);
+     return false;  
+   }
+ });   
   // saveUserToFirebase(user);
   
   // send message to db
-  function sendMessage(e) {
+  async function  sendMessage(e) {
     e.preventDefault();
   
+    const sentAt = new Date()
+      // const message = await this.saveMessage(
+      //   this.message,
+      //   sentAt,
+      //   vmThis.currentGroup.id
+      // )
+      // if (message) {
+      //   this.message = null
+      //   const group = {
+      //     ...this.currentGroup,
+      //     ...{
+      //       users: null,
+      //       modifiedAt: sentAt,
+      //       recentMessage: { ...message, ...{ readBy: [] } },
+      //     },
+      //   }
+      //   this.updateGroup(group)
+      // }
+
     // get values to be submitted
     const timestamp = Date.now();
     const messageInput = document.getElementById("chatSend");
-    const message = messageInput.value;
+    const messageText = messageInput.value;
   
     // clear the input box
-    if (!message || message.length <=0){
+    if (!messageText || messageText.length <=0){
       return;
     }
     messageInput.value = "";
@@ -538,6 +640,23 @@ async function firebaseConnect(user, existed=false){
     //   message,
     //   timestamp
     // });
+    const message = await messageFuncs.saveMessage(
+      messageText,
+      sentAt,
+      vmThis.currentGroup.id
+    )
+    if (message) {
+      // this.message = null
+      const group = {
+        ...vmThis.currentGroup,
+        ...{
+          users: null,
+          modifiedAt: sentAt,
+          recentMessage: { ...message, ...{ readBy: [] } },
+        },
+      }
+      groupFuncs.updateGroup(group)
+    }
   }
 
   function saveUserToFirebase(user) {
@@ -851,7 +970,9 @@ function hideChat(hide) {
           <a id="chat_first_screen">Bắt đầu hội thoại&nbsp;<i class="zmdi zmdi-arrow-right"></i></a>
       </form>
           </div>
+          
       <div id="chat_converse" class="chat_conversion chat_converse">
+      <div id="chat_converse-box" >
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
                  <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
@@ -867,6 +988,7 @@ function hideChat(hide) {
               Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
                <span class="status2">Just now. Not seen yet</span>
 
+      </div>
       </div>
       <div id="chat">
         <!-- messages will display here -->
@@ -962,7 +1084,7 @@ function hideChat(hide) {
       <div class="fab_field">
         <a id="fab_camera" class="fab"><i class="zmdi zmdi-camera"></i></a>
         <a id="fab_send" class="fab"><i class="zmdi zmdi-mail-send"></i></a>
-        <textarea id="chatSend" name="chat_message" placeholder="Nội dung tin" class="chat_field chat_message"></textarea>
+        <textarea id="chatSend" name="chat_message" placeholder="Nội dung chat" class="chat_field chat_message"></textarea>
       </div>
     </div>
       <a id="prime" class="fab"><i class="prime zmdi zmdi-comment-outline"></i></a>
