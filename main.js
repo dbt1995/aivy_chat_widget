@@ -173,8 +173,15 @@ async function firebaseConnect(user, existed=false){
   // user;
 
   const groupFuncs = {
-    createGroup(userArray, createdBy, name, type) {
-      const vm = this
+    async createGroup(userArray, createdBy, name, type) {
+      const vm = this;
+      const adminUser = await userFuncs.getUserByHostAndType(location.hostname, "admin");
+      debugger
+      if (!adminUser){
+        alert("Không tìm thấy tài khoản admin tương ứng")
+        return null;
+      }
+      userArray.push(adminUser);
       const group = {
         createdAt: new Date(),
         createdBy,
@@ -404,7 +411,6 @@ async function firebaseConnect(user, existed=false){
             if (doc) allMessages.push(doc.data())
           })
           vmThis.messages = allMessages
-          debugger
           if (allMessages && allMessages.length > 0) {
             $('#chat_converse-box').empty();
             allMessages.forEach(message=>{
@@ -478,6 +484,19 @@ async function firebaseConnect(user, existed=false){
               reject(error)
             })
         })
+      },
+      async getUserByHostAndType(host,type) {
+        const query = db.collection('user').where("host","==", host);
+        query.where("type", "==", type);
+        let querySnapshot = await query.get();
+        let data = [];
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            data.push(doc.data());
+        });
+        if (data && data.length > 0){
+          return data[0];
+        }
       },
       fetchUsers() {
         const vm = this
@@ -556,7 +575,7 @@ async function firebaseConnect(user, existed=false){
   } else {
     authFuncs.saveUserToLocalStorage(user)
     userFuncs.saveUser(user)
-    groupFuncs.createGroup([user], user, user.name, 'private')
+    await groupFuncs.createGroup([user], user, user.name, 'private')
   }
   vmThis.user = user;
 
@@ -835,6 +854,8 @@ $().ready(function () {
       phone: $("form#chat_first_screen_form input[name='phone']").val(),
       email: $("form#chat_first_screen_form input[name='email']").val(),
       content: $("form#chat_first_screen_form input[name='content']").val(),
+      host: location.hostname,
+      type: "guest",
       uid: guid()
     }
     // debugger
