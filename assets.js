@@ -1,5 +1,4 @@
 export const styles = `
-@import url(https://zavoloklom.github.io/material-design-iconic-font/css/docs.md-iconic-font.min.css);
 
 #aivy_webcare_widget ul li{
     list-style: none;
@@ -110,8 +109,8 @@ export const styles = `
     right: 85px;
     bottom: 20px;
     width: 400px;
-    font-size: 12px;
-    line-height: 22px;
+    font-size: 12px !important;
+    line-height: 22px !important;
     font-family: 'Roboto';
     font-weight: 500;
     -webkit-font-smoothing: antialiased;
@@ -163,6 +162,7 @@ export const styles = `
   }
   
   #aivy_webcare_widget .chat.is-visible {
+    background-color: white;
     opacity: 1;
     -webkit-animation: zoomIn .2s cubic-bezier(.42, 0, .58, 1);
     animation: zoomIn .2s cubic-bezier(.42, 0, .58, 1);
@@ -796,7 +796,7 @@ export const styles = `
   font-size: 14px;
 }
 #aivy_webcare_widget .form__field input, #aivy_webcare_widget .form__field textarea {
-  border: 1px solid #000 ad;
+  border: 1px solid #939393;
   border-radius: 3px;
   padding: 8px 10px;
   background-color: #fff;

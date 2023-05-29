@@ -939,6 +939,7 @@ function hideChat(hide) {
 
   createWidgetContent() {
     this.widgetContainer.innerHTML = `
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src='https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js'></script>
     <!-- <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script> -->
@@ -1112,12 +1113,12 @@ function hideChat(hide) {
         </span>
       </div>
       <div class="fab_field">
-        <a id="fab_camera" class="fab"><i class="zmdi zmdi-camera"></i></a>
-        <a id="fab_send" class="fab"><i class="zmdi zmdi-mail-send"></i></a>
+        <a id="fab_camera" class="fab"><i class="fa fa-picture-o"></i></a>
+        <a id="fab_send" class="fab"><i class="fa fa-paper-plane"></i></a>
         <textarea id="chatSend" name="chat_message" placeholder="Nội dung chat" class="chat_field chat_message"></textarea>
       </div>
     </div>
-      <a id="prime" class="fab"><i class="prime zmdi zmdi-comment-outline"></i></a>
+      <a id="prime" class="fab"><i class="fa fa-comment-o"></i></a>
   </div>
   </div>
         
