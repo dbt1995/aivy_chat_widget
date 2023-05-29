@@ -72,6 +72,7 @@ class MessageWidget {
 }
 
   async initialize() {
+    
     var vmThis = this;
 
     vmThis.currentGroup = null;
@@ -945,6 +946,7 @@ function hideChat(hide) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <div id="aivy_webcare_widget">
     <div class="fabs"> 
     <div class="chat">
       <div class="chat_header">
@@ -1116,6 +1118,7 @@ function hideChat(hide) {
       </div>
     </div>
       <a id="prime" class="fab"><i class="prime zmdi zmdi-comment-outline"></i></a>
+  </div>
   </div>
         
     `;
