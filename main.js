@@ -487,8 +487,8 @@ async function firebaseConnect(user, existed=false){
         })
       },
       async getUserByHostAndType(host,type) {
-        const query = db.collection('user').where("host","==", host);
-        query.where("type", "==", type);
+        const query = db.collection('user').where("hosttype","==", host+type);
+        // query.where("type", "==", type);
         let querySnapshot = await query.get();
         let data = [];
         querySnapshot.forEach((doc) => {
