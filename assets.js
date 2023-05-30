@@ -793,19 +793,23 @@ export const getStyles = function (color="#42a5f5", bottom=0, position="right", 
   border-top-right-radius: 10px;
   text-align: center;
 }
+
 #aivy_webcare_widget .widget__header h3 {
   font-size: 24px;
   font-weight: 400;
   margin-bottom: 8px;
 }
+
 #aivy_webcare_widget form {
   padding: 1rem 1rem 0.5rem;
 }
+
 #aivy_webcare_widget form .form__field {
   margin-bottom: 0.7rem;
   display: flex;
   flex-direction: column;
 }
+
 #aivy_webcare_widget .form__field label {
   margin-bottom: 8px;
   font-size: 14px;
@@ -817,7 +821,7 @@ export const getStyles = function (color="#42a5f5", bottom=0, position="right", 
   background-color: #fff;
 }
 #aivy_webcare_widget .form__field input {
-  height: 20px;
+  height: 40px;
 }
 #aivy_webcare_widget .form__field textarea::placeholder {
   font-family: Helvetica, Arial, sans-serif;

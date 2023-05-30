@@ -816,7 +816,7 @@ var U=Object.defineProperty;var j=(n,o,r)=>o in n?U(n,o,{enumerable:!0,configura
   background-color: #fff;
 }
 #aivy_webcare_widget .form__field input {
-  height: 20px;
+  height: 40px;
 }
 #aivy_webcare_widget .form__field textarea::placeholder {
   font-family: Helvetica, Arial, sans-serif;
