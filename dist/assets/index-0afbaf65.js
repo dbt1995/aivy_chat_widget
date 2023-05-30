@@ -1,4 +1,4 @@
-var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configurable:!0,writable:!0,value:h}):d[o]=h;var y=(d,o,h)=>(E(d,typeof o!="symbol"?o+"":o,h),h);(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const l of document.querySelectorAll('link[rel="modulepreload"]'))_(l);new MutationObserver(l=>{for(const g of l)if(g.type==="childList")for(const m of g.addedNodes)m.tagName==="LINK"&&m.rel==="modulepreload"&&_(m)}).observe(document,{childList:!0,subtree:!0});function h(l){const g={};return l.integrity&&(g.integrity=l.integrity),l.referrerPolicy&&(g.referrerPolicy=l.referrerPolicy),l.crossOrigin==="use-credentials"?g.credentials="include":l.crossOrigin==="anonymous"?g.credentials="omit":g.credentials="same-origin",g}function _(l){if(l.ep)return;l.ep=!0;const g=h(l);fetch(l.href,g)}})();const U=`
+var U=Object.defineProperty;var j=(n,o,r)=>o in n?U(n,o,{enumerable:!0,configurable:!0,writable:!0,value:r}):n[o]=r;var y=(n,o,r)=>(j(n,typeof o!="symbol"?o+"":o,r),r);(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const h of document.querySelectorAll('link[rel="modulepreload"]'))c(h);new MutationObserver(h=>{for(const g of h)if(g.type==="childList")for(const m of g.addedNodes)m.tagName==="LINK"&&m.rel==="modulepreload"&&c(m)}).observe(document,{childList:!0,subtree:!0});function r(h){const g={};return h.integrity&&(g.integrity=h.integrity),h.referrerPolicy&&(g.referrerPolicy=h.referrerPolicy),h.crossOrigin==="use-credentials"?g.credentials="include":h.crossOrigin==="anonymous"?g.credentials="omit":g.credentials="same-origin",g}function c(h){if(h.ep)return;h.ep=!0;const g=r(h);fetch(h.href,g)}})();const A=function(n="#42a5f5",o=0,r="right",c=25){return`
 
 #aivy_webcare_widget ul li{
     list-style: none;
@@ -16,10 +16,10 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
     font-size: 12px;
   }
   #aivy_webcare_widget .fabs {
-    bottom: 0;
+    bottom: ${o}px;
     position: fixed;
     margin: 1em;
-    right: 0;
+    ${r=="right"?`right: ${c}px;`:`left: ${c}px;`}
     z-index: 998;
     
   }
@@ -39,7 +39,7 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
     position: relative;
     z-index: 998;
     overflow: hidden;
-    background: #42a5f5;
+    background: ${n};
   }
   
   #aivy_webcare_widget .fab > i {
@@ -108,6 +108,12 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
     position: fixed;
     right: 85px;
     bottom: 20px;
+
+    bottom: ${o};
+    position: fixed;
+    margin: 1em;
+    ${r=="right"?`right: ${c+70}px;`:`left: ${c+70}px;`}
+
     width: 400px;
     font-size: 12px !important;
     line-height: 22px !important;
@@ -136,7 +142,7 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
       font-weight: 500;
       color: #f3f3f3;
       height: 55px;
-      background: #42a5f5;
+      background: ${n};
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       padding-top: 8px;
@@ -188,6 +194,8 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
   #aivy_webcare_widget .chat_option img {
       border-radius: 50%;
       width: 55px;
+      background: white;
+      padding: 3px;
       float: left;
       margin: -30px 20px 10px 20px;
       border: 4px solid rgba(0, 0, 0, 0.21);
@@ -234,7 +242,10 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
   }
   #aivy_webcare_widget .chat_body p {
     padding: 20px;
-    color: #888
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.2rem;
   }
   #aivy_webcare_widget .chat_body a {
     width: 10%;
@@ -322,7 +333,7 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
   }
   #aivy_webcare_widget  .fab_field {
     width: 100%;
-    display: inline-block;
+    display: none;
     text-align: center;
     background: #fff;
     border-top: 1px solid #eee;
@@ -367,7 +378,7 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
   }
   
  #aivy_webcare_widget .fab_field .fab > i:hover {
-  color: #42a5f5;
+  color: ${n};
 }
 #aivy_webcare_widget .chat_converse {
   position: relative;
@@ -400,8 +411,8 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
 }
 #aivy_webcare_widget .chat .chat_converse .chat_msg_item {
   position: relative;
-  margin: 6px 0 20px 0;
-  padding: 4px 11px;
+  margin: 6px 0 5px  0px;
+      padding: 6px 11px;
   max-width: 60%;
   display: block;
   word-wrap: break-word;
@@ -412,7 +423,10 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
   z-index: 999;
 }
 #aivy_webcare_widget .status {
-  margin: 45px -50px 0 0;
+  // margin: 40px -50px 0 0;
+  width: 100%;
+  text-align: right;
+  padding-right: 23px;
   float: right;
   font-size: 11px;
   opacity: 0.3;
@@ -451,7 +465,7 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
 #aivy_webcare_widget .chat .chat_converse .chat_msg_item.chat_msg_item_user {
   margin-right: 20px;
   float: right;
-  background: #42a5f5;
+  background: ${n};
   color: #eceff1;
 }
 #aivy_webcare_widget .chat .chat_converse .chat_msg_item.chat_msg_item_admin:before {
@@ -668,11 +682,11 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
  }
 }
 #aivy_webcare_widget .blue .fab {
-  background: #42a5f5;
+  background: ${n};
   color: #fff;
 }
 #aivy_webcare_widget .blue .chat {
-  background: #42a5f5;
+  background: ${n};
   color: #999;
 }
 #aivy_webcare_widget .ink {
@@ -827,19 +841,17 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
 
 
 
-`;function P(){function d(){return Math.floor((1+Math.random())*65536).toString(16).substring(1)}return d()+d()+"-"+d()+"-"+d()+"-"+d()+"-"+d()+d()+d()}class R{constructor(o="bottom-right"){y(this,"position","bottom-right");y(this,"open",!1);y(this,"widgetContainer",null);this.position=this.getPosition(o),this.open=!1,this.open=!1,this.currentGroup=null,this.passphrase="FirebaseChat",this.initialize(),this.injectStyles()}getPosition(o){const[h,_]=o.split("-");return{[h]:"30px",[_]:"30px"}}decryptUser(){const o=localStorage.getItem("enus");if(o){const _=CryptoJS.AES.decrypt(o,this.passphrase).toString(CryptoJS.enc.Utf8);return JSON.parse(_)}}async initialize(){var o=this;o.currentGroup=null;const h=document.createElement("div");document.body.appendChild(h),this.widgetContainer=document.createElement("div"),this.createWidgetContent(),h.appendChild(this.widgetContainer);let _=this.decryptUser();_?(m(0),m(1),l(_,!0)):m(0),$("#prime").click(function(){g()});async function l(p,f=!1){var b={apiKey:"AIzaSyAZlRMd1RygoP2niU5w4c057StI3mnzEwk",authDomain:"webcare-app.firebaseapp.com",databaseURL:"https://webcare-app-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"webcare-app",storageBucket:"webcare-app.appspot.com",messagingSenderId:"679542454067",appId:"1:679542454067:web:25aea5028d759452a9b046",measurementId:"G-9910EPHPNB"},I="FirebaseChat";if(!firebase.apps.length)firebase.initializeApp(b);else return"";const c=firebase.firestore(),v={async createGroup(e,a,s,i){const t=this,r=await x.getUserByHostAndType(location.hostname,"admin");debugger;if(!r)return alert("Không tìm thấy tài khoản admin tương ứng"),null;e.push(r);const n={createdAt:new Date,createdBy:a,members:e,name:s,type:i};return new Promise((u,w)=>{c.collection("group").add(n).then(function(k){n.id=k.id,t.fetchGroupByUserID(p),u(n)}).catch(function(k){w(k)})})},filterGroup(e){const a=this;return a.groups=[],new Promise((s,i)=>{let t=c.collection("group");e.forEach(r=>{t=t.where("members","==",r)}),t.get().then(function(r){const n=[];r.forEach(u=>{const w=u.data();w.id=u.id,n.push(w)}),n.length>0?s(n[0]):s(null)}).catch(function(r){i(r)})})},fetchGroupByUserID(e){return c.collection("group").where("members","array-contains",{...e}).onSnapshot(s=>{const i=[];s.forEach(t=>{const r=t.data();r.id=t.id,i.push(r)});debugger;i.length>0&&(o.currentGroup=i[0])})},fetchUsersByGroup(e){e.users=[];const a=[];return e.members.forEach(s=>{const i=new Promise((t,r)=>{c.collection("user").doc(s).get().then(function(n){console.log(JSON.stringify(n.data())),t(n.data())}).catch(function(n){r(n)})});a.push(i)}),Promise.all(a)},saveUser(e){c.collection("user").doc(e.uid).set({uid:e.uid,displayName:e.displayName,photoURL:e.photoURL,email:e.email})},checkUserExisted(e){const a=c.collection("user").doc(e.uid);return new Promise((s,i)=>{a.get().then(function(t){s(t.exists)}).catch(function(t){i(t)})})},fetchUsers(){const e=this;return new Promise((a,s)=>{c.collection("user").get().then(function(i){const t=[];i.forEach(r=>{const n=r.data();t.push(n)}),e.users=t,a(t.length>0)}).catch(function(i){s(i)})})},getUserFromFireStore(e){if(!e)return;const a=c.collection("user").doc(e.uid);return new Promise((s,i)=>{a.onSnapshot(function(t){s(t.data())})})},fetchGroupByIds(e){const a=[],s=c.collection("group");e.forEach(async i=>{await s.doc(i).get().then(function(t){a.push(t.data())}).catch(function(t){console.error("Error get document: ",t)})}),this.groups=a},updateGroup(e){c.collection("group").doc(e.id).set(e).then(function(a){}).catch(function(a){console.error("Error writing document: ",a)})},addNewGroupToUser(e,a){const s=e.groups?e.groups:[];s.filter(t=>t===a).length===0&&(s.push(a),e.groups=s,c.collection("user").doc(e.uid).set(e))}},z={saveMessage(e,a,s){if(e.trim()){const i={messageText:e,sentAt:a,sentBy:o.user.uid};return new Promise((t,r)=>{c.collection("message").doc(s).collection("messages").add(i).then(function(n){t(i)}).catch(function(n){r(n)})})}},fetchMessagesByGroupId(e){o.messages=[],c.collection("message").doc(e.trim()).collection("messages").orderBy("sentAt").onSnapshot(a=>{const s=[];a.forEach(i=>{i&&s.push(i.data())}),o.messages=s,s&&s.length>0&&($("#chat_converse-box").empty(),s.forEach(i=>{const t=`<span class="${o.user.uid===i.sentBy?"chat_msg_item chat_msg_item_user":"chat_msg_item chat_msg_item_admin"}">
+`};function P(){function n(){return Math.floor((1+Math.random())*65536).toString(16).substring(1)}return n()+n()+"-"+n()+"-"+n()+"-"+n()+"-"+n()+n()+n()}function I(n){var o=new Date(n*1e3),r=(new Date().getTime()-o.getTime())/1e3,c=Math.floor(r/86400);if(!(isNaN(c)||c<0||c>=31))return c==0&&(r<60&&"Vừa xong"||r<120&&"1 phút"||r<3600&&Math.floor(r/60)+" phút"||r<7200&&"1 giờ"||r<86400&&Math.floor(r/3600)+" giờ")||c==1&&"hôm qua"||c<7&&c+" ngày"||c<31&&Math.ceil(c/7)+" tuần"}typeof jQuery<"u"&&(jQuery.fn.prettyDate=function(){return this.each(function(){var n=I(this.title);n&&jQuery(this).text(n)})});class R{constructor(o,r,c,h,g,m){y(this,"position","bottom-right");y(this,"open",!1);y(this,"widgetContainer",null);this.position=this.getPosition(c),this.open=!1,this.bottom=r,this.position=c,this.distance=h,this.brand=g,this.icon=m,this.color=o,this.open=!1,this.currentGroup=null,this.passphrase="FirebaseChat",this.initialize(),this.injectStyles()}getPosition(o){const[r,c]=o.split("-");return{[r]:"30px",[c]:"30px"}}decryptUser(){const o=localStorage.getItem("enus");if(o){const c=CryptoJS.AES.decrypt(o,this.passphrase).toString(CryptoJS.enc.Utf8);return JSON.parse(c)}}async initialize(){var o=this;o.currentGroup=null;const r=document.createElement("div");document.body.appendChild(r),this.widgetContainer=document.createElement("div"),this.createWidgetContent(),r.appendChild(this.widgetContainer);let c=this.decryptUser();c?(m(0),m(1),h(c,!0)):m(0),$("#prime").click(function(){g()});async function h(_,f=!1){var b={apiKey:"AIzaSyAZlRMd1RygoP2niU5w4c057StI3mnzEwk",authDomain:"webcare-app.firebaseapp.com",databaseURL:"https://webcare-app-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"webcare-app",storageBucket:"webcare-app.appspot.com",messagingSenderId:"679542454067",appId:"1:679542454067:web:25aea5028d759452a9b046",measurementId:"G-9910EPHPNB"},C="FirebaseChat";if(!firebase.apps.length)firebase.initializeApp(b);else return"";const p=firebase.firestore(),v={async createGroup(e,a,s,i){const t=this,d=await x.getUserByHostAndType(location.hostname,"admin");if(!d)return alert("Không tìm thấy tài khoản admin tương ứng"),null;e.push(d);const l={createdAt:new Date,createdBy:a,members:e,name:s,type:i};return new Promise((u,w)=>{p.collection("group").add(l).then(function(k){l.id=k.id,t.fetchGroupByUserID(_),u(l)}).catch(function(k){w(k)})})},filterGroup(e){const a=this;return a.groups=[],new Promise((s,i)=>{let t=p.collection("group");e.forEach(d=>{t=t.where("members","==",d)}),t.get().then(function(d){const l=[];d.forEach(u=>{const w=u.data();w.id=u.id,l.push(w)}),l.length>0?s(l[0]):s(null)}).catch(function(d){i(d)})})},fetchGroupByUserID(e){return p.collection("group").where("members","array-contains",{...e}).onSnapshot(s=>{const i=[];s.forEach(t=>{const d=t.data();d.id=t.id,i.push(d)}),i.length>0&&(o.currentGroup=i[0])})},fetchUsersByGroup(e){e.users=[];const a=[];return e.members.forEach(s=>{const i=new Promise((t,d)=>{p.collection("user").doc(s).get().then(function(l){console.log(JSON.stringify(l.data())),t(l.data())}).catch(function(l){d(l)})});a.push(i)}),Promise.all(a)},saveUser(e){p.collection("user").doc(e.uid).set({uid:e.uid,displayName:e.displayName,photoURL:e.photoURL,email:e.email})},checkUserExisted(e){const a=p.collection("user").doc(e.uid);return new Promise((s,i)=>{a.get().then(function(t){s(t.exists)}).catch(function(t){i(t)})})},fetchUsers(){const e=this;return new Promise((a,s)=>{p.collection("user").get().then(function(i){const t=[];i.forEach(d=>{const l=d.data();t.push(l)}),e.users=t,a(t.length>0)}).catch(function(i){s(i)})})},getUserFromFireStore(e){if(!e)return;const a=p.collection("user").doc(e.uid);return new Promise((s,i)=>{a.onSnapshot(function(t){s(t.data())})})},fetchGroupByIds(e){const a=[],s=p.collection("group");e.forEach(async i=>{await s.doc(i).get().then(function(t){a.push(t.data())}).catch(function(t){console.error("Error get document: ",t)})}),this.groups=a},updateGroup(e){p.collection("group").doc(e.id).set(e).then(function(a){}).catch(function(a){console.error("Error writing document: ",a)})},addNewGroupToUser(e,a){const s=e.groups?e.groups:[];s.filter(t=>t===a).length===0&&(s.push(a),e.groups=s,p.collection("user").doc(e.uid).set(e))}},z={saveMessage(e,a,s){if(e.trim()){const i={messageText:e,sentAt:a,sentBy:o.user.uid};return new Promise((t,d)=>{p.collection("message").doc(s).collection("messages").add(i).then(function(l){t(i)}).catch(function(l){d(l)})})}},fetchMessagesByGroupId(e){o.messages=[],p.collection("message").doc(e.trim()).collection("messages").orderBy("sentAt").onSnapshot(a=>{const s=[];a.forEach(i=>{i&&s.push(i.data())}),o.messages=s,s&&s.length>0&&($("#chat_converse-box").empty(),s.forEach(i=>{const t=`<span class="${o.user.uid===i.sentBy?"chat_msg_item chat_msg_item_user":"chat_msg_item chat_msg_item_admin"}">
               
-              ${o.user.uid===i.sentBy?"":'<div class="chat_avatar"> <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/> </div>'}
+              ${o.user.uid===i.sentBy?"":'<div class="chat_avatar"> <img src="${this.icon}"/> </div>'}
               
               ${i.messageText}</span>
               
-              ${o.user.uid===i.sentBy?'<span class="status">20m ago</span>':""}
-              `;$("#chat_converse-box").append(t)})),document.getElementById("chat_converse-box").scrollIntoView({behavior:"smooth",block:"end",inline:"nearest"})})}},x={fetchUsersByGroup(e){e.users=[];const a=[];return e.members.forEach(s=>{const i=new Promise((t,r)=>{c.collection("user").doc(s).get().then(function(n){console.log(JSON.stringify(n.data())),t(n.data())}).catch(function(n){r(n)})});a.push(i)}),Promise.all(a)},saveUser(e){c.collection("user").doc(e.uid).set({...e})},checkUserExisted(e){const a=c.collection("user").doc(e.uid);return new Promise((s,i)=>{a.get().then(function(t){s(t.exists)}).catch(function(t){i(t)})})},async getUserByHostAndType(e,a){let i=await c.collection("user").where("hosttype","==",e+a).get(),t=[];if(i.forEach(r=>{t.push(r.data())}),t&&t.length>0)return t[0]},fetchUsers(){const e=this;return new Promise((a,s)=>{c.collection("user").get().then(function(i){const t=[];i.forEach(r=>{const n=r.data();t.push(n)}),e.users=t,a(t.length>0)}).catch(function(i){s(i)})})},getUserFromFireStore(e){if(!e)return;const a=c.collection("user").doc(e.uid);return new Promise((s,i)=>{a.onSnapshot(function(t){s(t.data())})})}},j={signInWithGoogleAuthentication(){const e=new firebase.auth.GoogleAuthProvider;return new Promise((a,s)=>{auth.signInWithPopup(e).then(function(i){a(i.user)}).catch(function(i){s(i)})})},saveUserToLocalStorage(e){const a=CryptoJS.AES.encrypt(JSON.stringify(e),I).toString();localStorage.setItem("enus",a)},saveUserToStore(e){this.$store.commit("user/add",e)},decryptUser(){const e=localStorage.getItem("enus");if(e){const s=CryptoJS.AES.decrypt(e,this.passphrase).toString(CryptoJS.enc.Utf8);return JSON.parse(s)}}};await x.checkUserExisted(p)?await v.fetchGroupByUserID(p):(j.saveUserToLocalStorage(p),x.saveUser(p),await v.createGroup([p],p,p.name,"private")),o.user=p,setTimeout(async()=>{debugger;await z.fetchMessagesByGroupId(o.currentGroup.id),o.loading=!1},1e3),document.getElementById("fab_send").addEventListener("click",S),$("#chatSend").keypress(function(e){var a=e.which;if(a==13)return S(e),!1});async function S(e){e.preventDefault();const a=new Date,s=document.getElementById("chatSend"),i=s.value;if(!i||i.length<=0)return;s.value="",document.getElementById("chat_converse").scrollIntoView({behavior:"smooth",block:"end",inline:"nearest"});const t=await z.saveMessage(i,a,o.currentGroup.id);if(t){const r={...o.currentGroup,users:null,modifiedAt:a,recentMessage:{...t,readBy:[]}};v.updateGroup(r)}}}function g(){$(".prime").toggleClass("zmdi-comment-outline"),$(".prime").toggleClass("zmdi-close"),$(".prime").toggleClass("is-active"),$(".prime").toggleClass("is-visible"),$("#prime").toggleClass("is-float"),$(".chat").toggleClass("is-visible"),$(".fab").toggleClass("is-visible")}$().ready(function(){$("#chat_first_screen").click(function(p){if($("form#chat_first_screen_form").validate({rules:{name:"required",phone:"required",email:{email:!0}},messages:{name:"Bạn chưa nhập tên",phone:"Bạn chưa nhập số điện thoại",email:"Email chưa đúng định dạng"},errorPlacement:function(f,b){b.is(":radio")?f.appendTo(b.parents(".form-group")):f.insertAfter(b)},submitHandler:function(f){}}),$("form#chat_first_screen_form").valid()){m(1);let f={name:$("form#chat_first_screen_form input[name='name']").val(),phone:$("form#chat_first_screen_form input[name='phone']").val(),email:$("form#chat_first_screen_form input[name='email']").val(),content:$("form#chat_first_screen_form input[name='content']").val(),host:location.hostname,type:"guest",uid:P()};l(f)}})}),$("#chat_second_screen").click(function(p){m(2)}),$("#chat_third_screen").click(function(p){m(3)}),$("#chat_fourth_screen").click(function(p){m(4)}),$("#chat_fullscreen_loader").click(function(p){$(".fullscreen").toggleClass("zmdi-window-maximize"),$(".fullscreen").toggleClass("zmdi-window-restore"),$(".chat").toggleClass("chat_fullscreen"),$(".fab").toggleClass("is-hide"),$(".header_img").toggleClass("change_img"),$(".img_container").toggleClass("change_img"),$(".chat_header").toggleClass("chat_header2"),$(".fab_field").toggleClass("fab_field2"),$(".chat_converse").toggleClass("chat_converse2")});function m(p){switch(p){case 0:$("#chat_converse").css("display","none"),$("#chat_body").css("display","none"),$("#chat_form").css("display","none"),$(".chat_login").css("display","block"),$(".chat_fullscreen_loader").css("display","none"),$("#chat_fullscreen").css("display","none");break;case 1:$("#chat_converse").css("display","block"),$("#chat_body").css("display","none"),$("#chat_form").css("display","none"),$(".chat_login").css("display","none"),$(".chat_fullscreen_loader").css("display","block");break;case 2:$("#chat_converse").css("display","none"),$("#chat_body").css("display","block"),$("#chat_form").css("display","none"),$(".chat_login").css("display","none"),$(".chat_fullscreen_loader").css("display","block");break;case 3:$("#chat_converse").css("display","none"),$("#chat_body").css("display","none"),$("#chat_form").css("display","block"),$(".chat_login").css("display","none"),$(".chat_fullscreen_loader").css("display","block");break;case 4:$("#chat_converse").css("display","none"),$("#chat_body").css("display","none"),$("#chat_form").css("display","none"),$(".chat_login").css("display","none"),$(".chat_fullscreen_loader").css("display","block"),$("#chat_fullscreen").css("display","block");break}}}createWidgetContent(){this.widgetContainer.innerHTML=`
+              ${o.user.uid===i.sentBy?'<span class="status">'+I(i.sentAt.seconds)+"</span>":""}
+              `;$("#chat_converse-box").append(t)})),document.getElementById("chat_converse-box").scrollIntoView({behavior:"smooth",block:"end",inline:"nearest"})})}},x={fetchUsersByGroup(e){e.users=[];const a=[];return e.members.forEach(s=>{const i=new Promise((t,d)=>{p.collection("user").doc(s).get().then(function(l){console.log(JSON.stringify(l.data())),t(l.data())}).catch(function(l){d(l)})});a.push(i)}),Promise.all(a)},saveUser(e){p.collection("user").doc(e.uid).set({...e})},checkUserExisted(e){const a=p.collection("user").doc(e.uid);return new Promise((s,i)=>{a.get().then(function(t){s(t.exists)}).catch(function(t){i(t)})})},async getUserByHostAndType(e,a){let i=await p.collection("user").where("hosttype","==",e+a).get(),t=[];if(i.forEach(d=>{t.push(d.data())}),t&&t.length>0)return t[0]},fetchUsers(){const e=this;return new Promise((a,s)=>{p.collection("user").get().then(function(i){const t=[];i.forEach(d=>{const l=d.data();t.push(l)}),e.users=t,a(t.length>0)}).catch(function(i){s(i)})})},getUserFromFireStore(e){if(!e)return;const a=p.collection("user").doc(e.uid);return new Promise((s,i)=>{a.onSnapshot(function(t){s(t.data())})})}},E={signInWithGoogleAuthentication(){const e=new firebase.auth.GoogleAuthProvider;return new Promise((a,s)=>{auth.signInWithPopup(e).then(function(i){a(i.user)}).catch(function(i){s(i)})})},saveUserToLocalStorage(e){const a=CryptoJS.AES.encrypt(JSON.stringify(e),C).toString();localStorage.setItem("enus",a)},saveUserToStore(e){this.$store.commit("user/add",e)},decryptUser(){const e=localStorage.getItem("enus");if(e){const s=CryptoJS.AES.decrypt(e,this.passphrase).toString(CryptoJS.enc.Utf8);return JSON.parse(s)}}};await x.checkUserExisted(_)?await v.fetchGroupByUserID(_):(E.saveUserToLocalStorage(_),x.saveUser(_),await v.createGroup([_],_,_.name,"private")),o.user=_,setTimeout(async()=>{await z.fetchMessagesByGroupId(o.currentGroup.id),o.loading=!1},1e3),document.getElementById("fab_send").addEventListener("click",S),$("#chatSend").keypress(function(e){var a=e.which;if(a==13)return S(e),!1});async function S(e){e.preventDefault();const a=new Date,s=document.getElementById("chatSend"),i=s.value;if(!i||i.length<=0)return;s.value="",document.getElementById("chat_converse").scrollIntoView({behavior:"smooth",block:"end",inline:"nearest"});const t=await z.saveMessage(i,a,o.currentGroup.id);if(t){const d={...o.currentGroup,users:null,modifiedAt:a,recentMessage:{...t,readBy:[]}};v.updateGroup(d)}}}function g(){$(".prime").toggleClass("zmdi-comment-outline"),$(".prime").toggleClass("zmdi-close"),$(".prime").toggleClass("is-active"),$(".prime").toggleClass("is-visible"),$("#prime").toggleClass("is-float"),$(".chat").toggleClass("is-visible"),$(".fab").toggleClass("is-visible")}$().ready(function(){$("#chat_first_screen").click(function(_){if($("form#chat_first_screen_form").validate({rules:{name:"required",phone:"required",email:{email:!0}},messages:{name:"Bạn chưa nhập tên",phone:"Bạn chưa nhập số điện thoại",email:"Email chưa đúng định dạng"},errorPlacement:function(f,b){b.is(":radio")?f.appendTo(b.parents(".form-group")):f.insertAfter(b)},submitHandler:function(f){}}),$("form#chat_first_screen_form").valid()){m(1);let f={name:$("form#chat_first_screen_form input[name='name']").val(),phone:$("form#chat_first_screen_form input[name='phone']").val(),email:$("form#chat_first_screen_form input[name='email']").val(),content:$("form#chat_first_screen_form input[name='content']").val(),host:location.hostname,type:"guest",uid:P()};h(f)}})}),$("#chat_second_screen").click(function(_){m(2)}),$("#chat_third_screen").click(function(_){m(3)}),$("#chat_fourth_screen").click(function(_){m(4)}),$("#chat_fullscreen_loader").click(function(_){$(".fullscreen").toggleClass("zmdi-window-maximize"),$(".fullscreen").toggleClass("zmdi-window-restore"),$(".chat").toggleClass("chat_fullscreen"),$(".fab").toggleClass("is-hide"),$(".header_img").toggleClass("change_img"),$(".img_container").toggleClass("change_img"),$(".chat_header").toggleClass("chat_header2"),$(".fab_field").toggleClass("fab_field2"),$(".chat_converse").toggleClass("chat_converse2")});function m(_){switch(_){case 0:$("#chat_converse").css("display","none"),$("#chat_body").css("display","none"),$("#chat_form").css("display","none"),$(".chat_login").css("display","block"),$(".chat_fullscreen_loader").css("display","none"),$("#chat_fullscreen").css("display","none");break;case 1:$("#chat_converse").css("display","block"),$("#chat_body").css("display","none"),$("#chat_form").css("display","none"),$("#aivy_webcare_widget .fab_field").css("display","inline-block"),$(".chat_login").css("display","none"),$(".chat_fullscreen_loader").css("display","block");break;case 2:$("#chat_converse").css("display","none"),$("#chat_body").css("display","block"),$("#chat_form").css("display","none"),$(".chat_login").css("display","none"),$(".chat_fullscreen_loader").css("display","block");break;case 3:$("#chat_converse").css("display","none"),$("#chat_body").css("display","none"),$("#chat_form").css("display","block"),$(".chat_login").css("display","none"),$(".chat_fullscreen_loader").css("display","block");break;case 4:$("#chat_converse").css("display","none"),$("#chat_body").css("display","none"),$("#chat_form").css("display","none"),$(".chat_login").css("display","none"),$(".chat_fullscreen_loader").css("display","block"),$("#chat_fullscreen").css("display","block");break}}}createWidgetContent(){this.widgetContainer.innerHTML=`
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'><\/script>
     <script src='https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js'><\/script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"><\/script> -->
-    <!-- <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"><\/script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"><\/script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"><\/script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"><\/script>
@@ -849,9 +861,9 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
       <div class="chat_header">
         <div class="chat_option">
         <div class="header_img">
-          <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+          <img src="${this.icon}"/>
           </div>
-          <span id="chat_head">Xin chào</span> <br> <span class="agent">Agent</span> 
+          <span id="chat_head">Xin chào</span> <br> <span class="agent">${this.brand}</span> 
           <!--  <span class="online">(Online)</span> -->
          <span id="chat_fullscreen_loader" class="chat_fullscreen_loader"><i class="fullscreen zmdi zmdi-window-maximize"></i></span>
   
@@ -902,14 +914,14 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
       <div id="chat_converse-box" >
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Hey there! Any question?</span>
         <span class="chat_msg_item chat_msg_item_user">
               Hello!</span>
               <span class="status">20m ago</span>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Hey! Would you like to talk sales, support, or anyone?</span>
         <span class="chat_msg_item chat_msg_item_user">
               Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
@@ -941,14 +953,14 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
       <a id="chat_fourth_screen" class="fab"><i class="zmdi zmdi-arrow-right"></i></a>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Hey there! Any question?</span>
         <span class="chat_msg_item chat_msg_item_user">
               Hello!</span>
               <span class="status">20m ago</span>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Agent typically replies in a few hours. Don't miss their reply.
               <div>
                 <br>
@@ -961,7 +973,7 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
   
           <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Send message to agent.
               <div>
                 <form class="message_form">
@@ -976,26 +988,26 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
         <div id="chat_fullscreen" class="chat_conversion chat_converse">
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Hey there! Any question?</span>
         <span class="chat_msg_item chat_msg_item_user">
               Hello!</span>
               <div class="status">20m ago</div>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Hey! Would you like to talk sales, support, or anyone?</span>
         <span class="chat_msg_item chat_msg_item_user">
               Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
                </div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span>
         <span class="chat_msg_item chat_msg_item_user">
               Where can I get some?</span>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
                </div>The standard chuck...</span>
         <span class="chat_msg_item chat_msg_item_user">
               There are many variations of passages of Lorem Ipsum available</span>
@@ -1018,4 +1030,4 @@ var C=Object.defineProperty;var E=(d,o,h)=>o in d?C(d,o,{enumerable:!0,configura
   </div>
   </div>
         
-    `}injectStyles(){const o=document.createElement("style");o.innerHTML=U.replace(/^\s+|\n/gm,""),document.head.appendChild(o)}toggleOpen(){this.open=!this.open,this.open?(this.widgetIcon.classList.add("widget__hidden"),this.closeIcon.classList.remove("widget__hidden"),this.widgetContainer.classList.remove("widget__hidden")):(this.createWidgetContent(),this.widgetIcon.classList.remove("widget__hidden"),this.closeIcon.classList.add("widget__hidden"),this.widgetContainer.classList.add("widget__hidden"))}}function G(){return new R}G();
+    `}injectStyles(){const o=document.createElement("style"),r=A(this.color,this.bottom,this.position,this.distance);o.innerHTML=r.replace(/^\s+|\n/gm,""),document.head.appendChild(o)}toggleOpen(){this.open=!this.open,this.open?(this.widgetIcon.classList.add("widget__hidden"),this.closeIcon.classList.remove("widget__hidden"),this.widgetContainer.classList.remove("widget__hidden")):(this.createWidgetContent(),this.widgetIcon.classList.remove("widget__hidden"),this.closeIcon.classList.add("widget__hidden"),this.widgetContainer.classList.add("widget__hidden"))}}function G(){if(aivyWebcareWidgetOption){const{color:n,bottom:o,position:r,distance:c,brand:h,icon:g}=aivyWebcareWidgetOption;return new R(n,o,r,c,h,g)}console.log("AivyChatWidget chưa nhận được cài đặt")}G();

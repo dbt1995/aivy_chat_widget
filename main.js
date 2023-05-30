@@ -22,7 +22,7 @@
 // `
 
 // setupCounter(document.querySelector('#counter'))
-import { CLOSE_ICON, MESSAGE_ICON, styles } from "./assets.js";
+import { CLOSE_ICON, MESSAGE_ICON, getStyles } from "./assets.js";
 
 function guid() {
   function s4() {
@@ -34,10 +34,45 @@ function guid() {
     s4() + '-' + s4() + s4() + s4();
 }
 
-class MessageWidget {
-  constructor(position = "bottom-right"){
+function prettyDate(time){
+	var date = new Date(time*1000),
+		diff = (((new Date()).getTime() - date.getTime()) / 1000),
+		day_diff = Math.floor(diff / 86400);
+			
+	if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
+		return;
+			
+	return day_diff == 0 && (
+			diff < 60 && "Vừa xong" ||
+			diff < 120 && "1 phút" ||
+			diff < 3600 && Math.floor( diff / 60 ) + " phút" ||
+			diff < 7200 && "1 giờ" ||
+			diff < 86400 && Math.floor( diff / 3600 ) + " giờ") ||
+		day_diff == 1 && "hôm qua" ||
+		day_diff < 7 && day_diff + " ngày" ||
+		day_diff < 31 && Math.ceil( day_diff / 7 ) + " tuần";
+}
+
+// If jQuery is included in the page, adds a jQuery plugin to handle it as well
+if ( typeof jQuery != "undefined" )
+	jQuery.fn.prettyDate = function(){
+		return this.each(function(){
+			var date = prettyDate(this.title);
+			if ( date )
+				jQuery(this).text( date );
+		});
+	};
+
+class AivyMessageWidget {
+  constructor(color, bottom, position, distance, brand, icon){
     this.position = this.getPosition(position);
     this.open = false;
+    this.bottom = bottom;
+    this.position = position;
+    this.distance = distance;
+    this.brand = brand;
+    this.icon = icon;
+    this.color = color;
     this.open = false;
     this.currentGroup = null;
 
@@ -177,7 +212,6 @@ async function firebaseConnect(user, existed=false){
     async createGroup(userArray, createdBy, name, type) {
       const vm = this;
       const adminUser = await userFuncs.getUserByHostAndType(location.hostname, "admin");
-      debugger
       if (!adminUser){
         alert("Không tìm thấy tài khoản admin tương ứng")
         return null;
@@ -245,7 +279,6 @@ async function firebaseConnect(user, existed=false){
         })
         // iff
         // vm.groups = allGroups
-        debugger
         if (allGroups.length > 0){
           vmThis.currentGroup = allGroups[0];
         }
@@ -419,12 +452,12 @@ async function firebaseConnect(user, existed=false){
                 vmThis.user.uid === message.sentBy ? "chat_msg_item chat_msg_item_user" : "chat_msg_item chat_msg_item_admin"
               }">
               
-              ${vmThis.user.uid === message.sentBy ? "" : '<div class="chat_avatar"> <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/> </div>'}
+              ${vmThis.user.uid === message.sentBy ? "" : '<div class="chat_avatar"> <img src="${this.icon}"/> </div>'}
               
               ${message.messageText}</span>
               
               ${
-                vmThis.user.uid === message.sentBy ?  '<span class="status">20m ago</span>' : ""
+                vmThis.user.uid === message.sentBy ?  '<span class="status">'+prettyDate(message.sentAt.seconds)+'</span>' : ""
               }
               `;
               // append the message on the page
@@ -582,7 +615,6 @@ async function firebaseConnect(user, existed=false){
 
 
   setTimeout(async () => {
-    debugger
     await messageFuncs.fetchMessagesByGroupId(vmThis.currentGroup.id)
     
     vmThis.loading = false
@@ -787,7 +819,7 @@ async function firebaseConnect(user, existed=false){
   //     username === messages.username ? "chat_msg_item chat_msg_item_user" : "chat_msg_item chat_msg_item_admin"
   //   }">
     
-  //   ${username === messages.username ? "" : '<div class="chat_avatar"> <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/> </div>'}
+  //   ${username === messages.username ? "" : '<div class="chat_avatar"> <img src="${this.icon}"/> </div>'}
     
   //   ${messages.message}</span>
     
@@ -908,6 +940,7 @@ function hideChat(hide) {
             $('#chat_converse').css('display', 'block');
             $('#chat_body').css('display', 'none');
             $('#chat_form').css('display', 'none');
+            $('#aivy_webcare_widget .fab_field').css('display', 'inline-block');
             $('.chat_login').css('display', 'none');
             $('.chat_fullscreen_loader').css('display', 'block');
             break;
@@ -942,8 +975,6 @@ function hideChat(hide) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src='https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js'></script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script> -->
-    <!-- <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -953,9 +984,9 @@ function hideChat(hide) {
       <div class="chat_header">
         <div class="chat_option">
         <div class="header_img">
-          <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+          <img src="${this.icon}"/>
           </div>
-          <span id="chat_head">Xin chào</span> <br> <span class="agent">Agent</span> 
+          <span id="chat_head">Xin chào</span> <br> <span class="agent">${this.brand}</span> 
           <!--  <span class="online">(Online)</span> -->
          <span id="chat_fullscreen_loader" class="chat_fullscreen_loader"><i class="fullscreen zmdi zmdi-window-maximize"></i></span>
   
@@ -1006,14 +1037,14 @@ function hideChat(hide) {
       <div id="chat_converse-box" >
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Hey there! Any question?</span>
         <span class="chat_msg_item chat_msg_item_user">
               Hello!</span>
               <span class="status">20m ago</span>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Hey! Would you like to talk sales, support, or anyone?</span>
         <span class="chat_msg_item chat_msg_item_user">
               Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
@@ -1045,14 +1076,14 @@ function hideChat(hide) {
       <a id="chat_fourth_screen" class="fab"><i class="zmdi zmdi-arrow-right"></i></a>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Hey there! Any question?</span>
         <span class="chat_msg_item chat_msg_item_user">
               Hello!</span>
               <span class="status">20m ago</span>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Agent typically replies in a few hours. Don't miss their reply.
               <div>
                 <br>
@@ -1065,7 +1096,7 @@ function hideChat(hide) {
   
           <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Send message to agent.
               <div>
                 <form class="message_form">
@@ -1080,26 +1111,26 @@ function hideChat(hide) {
         <div id="chat_fullscreen" class="chat_conversion chat_converse">
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Hey there! Any question?</span>
         <span class="chat_msg_item chat_msg_item_user">
               Hello!</span>
               <div class="status">20m ago</div>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
               </div>Hey! Would you like to talk sales, support, or anyone?</span>
         <span class="chat_msg_item chat_msg_item_user">
               Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
                </div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span>
         <span class="chat_msg_item chat_msg_item_user">
               Where can I get some?</span>
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
-                 <img src="https://banner2.cleanpng.com/20181118/uc/kisspng-city-of-tollo-computer-icons-clip-art-avatar-image-vivaa-support-system-5bf236d706bcf4.8474855615426004070276.jpg"/>
+                 <img src="${this.icon}"/>
                </div>The standard chuck...</span>
         <span class="chat_msg_item chat_msg_item_user">
               There are many variations of passages of Lorem Ipsum available</span>
@@ -1127,6 +1158,7 @@ function hideChat(hide) {
 
   injectStyles() {
     const styleTag = document.createElement("style");
+    const styles = getStyles(this.color, this.bottom, this.position, this.distance);
     styleTag.innerHTML = styles.replace(/^\s+|\n/gm, "");
     document.head.appendChild(styleTag);
   }
@@ -1146,8 +1178,12 @@ function hideChat(hide) {
   }
 }
 
-function initializeWidget() {
-  return new MessageWidget();
+function AivyInitializeWidget() {
+  if (aivyWebcareWidgetOption){
+    const {color, bottom, position, distance, brand, icon} = aivyWebcareWidgetOption;
+    return new AivyMessageWidget(color, bottom, position, distance, brand, icon);
+  }
+  console.log("AivyChatWidget chưa nhận được cài đặt")
 }
 
-initializeWidget();
+AivyInitializeWidget();

@@ -1,4 +1,5 @@
-export const styles = `
+export const getStyles = function (color="#42a5f5", bottom=0, position="right", distance=25) {
+  return  `
 
 #aivy_webcare_widget ul li{
     list-style: none;
@@ -16,10 +17,10 @@ export const styles = `
     font-size: 12px;
   }
   #aivy_webcare_widget .fabs {
-    bottom: 0;
+    bottom: ${bottom}px;
     position: fixed;
     margin: 1em;
-    right: 0;
+    ${position=="right" ? `right: ${distance}px;` : `left: ${distance}px;`}
     z-index: 998;
     
   }
@@ -39,7 +40,7 @@ export const styles = `
     position: relative;
     z-index: 998;
     overflow: hidden;
-    background: #42a5f5;
+    background: ${color};
   }
   
   #aivy_webcare_widget .fab > i {
@@ -108,6 +109,12 @@ export const styles = `
     position: fixed;
     right: 85px;
     bottom: 20px;
+
+    bottom: ${bottom};
+    position: fixed;
+    margin: 1em;
+    ${position=="right" ? `right: ${distance+70}px;` : `left: ${distance+70}px;`}
+
     width: 400px;
     font-size: 12px !important;
     line-height: 22px !important;
@@ -136,7 +143,7 @@ export const styles = `
       font-weight: 500;
       color: #f3f3f3;
       height: 55px;
-      background: #42a5f5;
+      background: ${color};
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       padding-top: 8px;
@@ -188,6 +195,8 @@ export const styles = `
   #aivy_webcare_widget .chat_option img {
       border-radius: 50%;
       width: 55px;
+      background: white;
+      padding: 3px;
       float: left;
       margin: -30px 20px 10px 20px;
       border: 4px solid rgba(0, 0, 0, 0.21);
@@ -234,7 +243,10 @@ export const styles = `
   }
   #aivy_webcare_widget .chat_body p {
     padding: 20px;
-    color: #888
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.2rem;
   }
   #aivy_webcare_widget .chat_body a {
     width: 10%;
@@ -322,7 +334,7 @@ export const styles = `
   }
   #aivy_webcare_widget  .fab_field {
     width: 100%;
-    display: inline-block;
+    display: none;
     text-align: center;
     background: #fff;
     border-top: 1px solid #eee;
@@ -367,7 +379,7 @@ export const styles = `
   }
   
  #aivy_webcare_widget .fab_field .fab > i:hover {
-  color: #42a5f5;
+  color: ${color};
 }
 #aivy_webcare_widget .chat_converse {
   position: relative;
@@ -400,8 +412,8 @@ export const styles = `
 }
 #aivy_webcare_widget .chat .chat_converse .chat_msg_item {
   position: relative;
-  margin: 6px 0 20px 0;
-  padding: 4px 11px;
+  margin: 6px 0 5px  0px;
+      padding: 6px 11px;
   max-width: 60%;
   display: block;
   word-wrap: break-word;
@@ -412,7 +424,10 @@ export const styles = `
   z-index: 999;
 }
 #aivy_webcare_widget .status {
-  margin: 45px -50px 0 0;
+  // margin: 40px -50px 0 0;
+  width: 100%;
+  text-align: right;
+  padding-right: 23px;
   float: right;
   font-size: 11px;
   opacity: 0.3;
@@ -451,7 +466,7 @@ export const styles = `
 #aivy_webcare_widget .chat .chat_converse .chat_msg_item.chat_msg_item_user {
   margin-right: 20px;
   float: right;
-  background: #42a5f5;
+  background: ${color};
   color: #eceff1;
 }
 #aivy_webcare_widget .chat .chat_converse .chat_msg_item.chat_msg_item_admin:before {
@@ -668,11 +683,11 @@ export const styles = `
  }
 }
 #aivy_webcare_widget .blue .fab {
-  background: #42a5f5;
+  background: ${color};
   color: #fff;
 }
 #aivy_webcare_widget .blue .chat {
-  background: #42a5f5;
+  background: ${color};
   color: #999;
 }
 #aivy_webcare_widget .ink {
@@ -828,6 +843,11 @@ export const styles = `
 
 
 `;
+
+}
+
+
+
 
 export const MESSAGE_ICON = `
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
