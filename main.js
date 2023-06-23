@@ -1038,17 +1038,8 @@ function hideChat(hide) {
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
                  <img src="${this.icon}"/>
-              </div>Hey there! Any question?</span>
-        <span class="chat_msg_item chat_msg_item_user">
-              Hello!</span>
-              <span class="status">20m ago</span>
-        <span class="chat_msg_item chat_msg_item_admin">
-              <div class="chat_avatar">
-                 <img src="${this.icon}"/>
-              </div>Hey! Would you like to talk sales, support, or anyone?</span>
-        <span class="chat_msg_item chat_msg_item_user">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
-               <span class="status2">Just now. Not seen yet</span>
+              </div>Xin chào, tôi có thể giúp gì cho bạn?</span>
+        
 
       </div>
       </div>
@@ -1077,22 +1068,9 @@ function hideChat(hide) {
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
                  <img src="${this.icon}"/>
-              </div>Hey there! Any question?</span>
-        <span class="chat_msg_item chat_msg_item_user">
-              Hello!</span>
-              <span class="status">20m ago</span>
-        <span class="chat_msg_item chat_msg_item_admin">
-              <div class="chat_avatar">
-                 <img src="${this.icon}"/>
-              </div>Agent typically replies in a few hours. Don't miss their reply.
-              <div>
-                <br>
-                <form class="get-notified">
-                    <label for="chat_log_email">Get notified by email</label>
-                    <input id="chat_log_email" placeholder="Enter your email"/>
-                    <i class="zmdi zmdi-chevron-right"></i>
-                </form>
-              </div></span>
+              </div>Xin chào, tôi có thể giúp gì cho bạn?</span>
+       
+       
   
           <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
@@ -1112,36 +1090,10 @@ function hideChat(hide) {
         <span class="chat_msg_item chat_msg_item_admin">
               <div class="chat_avatar">
                  <img src="${this.icon}"/>
-              </div>Hey there! Any question?</span>
-        <span class="chat_msg_item chat_msg_item_user">
-              Hello!</span>
-              <div class="status">20m ago</div>
-        <span class="chat_msg_item chat_msg_item_admin">
-              <div class="chat_avatar">
-                 <img src="${this.icon}"/>
-              </div>Hey! Would you like to talk sales, support, or anyone?</span>
-        <span class="chat_msg_item chat_msg_item_user">
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
-        <span class="chat_msg_item chat_msg_item_admin">
-              <div class="chat_avatar">
-                 <img src="${this.icon}"/>
-               </div>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</span>
-        <span class="chat_msg_item chat_msg_item_user">
-              Where can I get some?</span>
-        <span class="chat_msg_item chat_msg_item_admin">
-              <div class="chat_avatar">
-                 <img src="${this.icon}"/>
-               </div>The standard chuck...</span>
-        <span class="chat_msg_item chat_msg_item_user">
-              There are many variations of passages of Lorem Ipsum available</span>
-              <div class="status2">Just now, Not seen yet</div>
-        <span class="chat_msg_item ">
-            <ul class="tags">
-              <li>Hats</li>
-              <li>T-Shirts</li>
-              <li>Pants</li>
-            </ul>
-        </span>
+              </div>Xin chào, tôi có thể giúp gì cho bạn?</span>
+       
+       
+      
       </div>
       <div class="fab_field">
         <a id="fab_camera" class="fab"><i class="fa fa-picture-o"></i></a>
