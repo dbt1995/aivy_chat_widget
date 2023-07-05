@@ -21,7 +21,7 @@ export const getStyles = function (color="#42a5f5", bottom=0, position="right", 
     position: fixed;
     margin: 1em;
     ${position=="right" ? `right: ${distance}px;` : `left: ${distance}px;`}
-    z-index: 998;
+    z-index: 100000000000000;
     
   }
   

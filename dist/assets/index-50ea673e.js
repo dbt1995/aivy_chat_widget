@@ -20,7 +20,7 @@ var G=Object.defineProperty;var R=(n,r,s)=>r in n?G(n,r,{enumerable:!0,configura
     position: fixed;
     margin: 1em;
     ${s=="right"?`right: ${d}px;`:`left: ${d}px;`}
-    z-index: 998;
+    z-index: 100000000000000;
     
   }
   
