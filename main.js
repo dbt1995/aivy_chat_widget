@@ -172,7 +172,7 @@ class AivyMessageWidget {
     // debugger
 
     if (localUser) {
-      localUser.host = 'aivyjsc.com';
+      // localUser.host = 'aivyjsc.com';
       hideChat(0);
       hideChat(1);
 
@@ -215,7 +215,7 @@ class AivyMessageWidget {
       const groupFuncs = {
         async createGroup(userArray, createdBy, name, type) {
           const vm = this;
-          const adminUser = await userFuncs.getUserByHostAndType('demo1.aivyjsc.com', "admin");
+          const adminUser = await userFuncs.getUserByHostAndType(location.host, "admin");
           if (!adminUser) {
             alert("Không tìm thấy tài khoản admin tương ứng")
             return null;
@@ -228,6 +228,7 @@ class AivyMessageWidget {
             name,
             type,
           }
+          debugger
           return new Promise((resolve, reject) => {
             db.collection('group')
               .add(group)
@@ -272,6 +273,7 @@ class AivyMessageWidget {
         fetchGroupByUserID(user) {
           const vm = this
           const groupRef = db.collection('group');
+          debugger
           return groupRef.where('members', 'array-contains', { ...user })
             .onSnapshot((querySnapshot) => {
               const allGroups = [];
@@ -625,6 +627,7 @@ class AivyMessageWidget {
       } else {
         authFuncs.saveUserToLocalStorage(user)
         userFuncs.saveUser(user)
+        
         await groupFuncs.createGroup([user], user, user.name, 'private')
       }
       vmThis.user = user;
