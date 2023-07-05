@@ -169,8 +169,10 @@ class AivyMessageWidget {
     // container.appendChild(buttonContainer);
     // hideChat(0);
     let localUser = this.decryptUser();
+    // debugger
 
     if (localUser) {
+      localUser.host = 'aivyjsc.com';
       hideChat(0);
       hideChat(1);
 
@@ -213,7 +215,7 @@ class AivyMessageWidget {
       const groupFuncs = {
         async createGroup(userArray, createdBy, name, type) {
           const vm = this;
-          const adminUser = await userFuncs.getUserByHostAndType(location.hostname, "admin");
+          const adminUser = await userFuncs.getUserByHostAndType('demo1.aivyjsc.com', "admin");
           if (!adminUser) {
             alert("Không tìm thấy tài khoản admin tương ứng")
             return null;
@@ -415,7 +417,7 @@ class AivyMessageWidget {
 
       const messageFuncs = {
         saveMessage(messageText, sentAt, currentGroupId, type="string") {
-          if (messageText.trim()) {
+          // if (messageText.trim()) {
             const message = {
               messageText,
               sentAt,
@@ -434,9 +436,9 @@ class AivyMessageWidget {
                   reject(error)
                 })
             })
-          }
+          // }
         },
-        fetchMessagesByGroupId(groupId) {
+        async fetchMessagesByGroupId(groupId) {
           vmThis.messages = []
           db.collection('message')
             .doc(groupId.trim())
@@ -450,12 +452,13 @@ class AivyMessageWidget {
               vmThis.messages = allMessages
               if (allMessages && allMessages.length > 0) {
                 $('#chat_converse-box').empty();
-                allMessages.forEach(message => {
+                allMessages.forEach( async message => {
                   let imageElement = '';
                   if (message.type == "image"){
                     if (message.messageText && message.messageText.length > 0){
                       for(let i =0 ; i <message.messageText.length; i++){
-                        imageElement +='<img style="height: 100px; width: auto;" src="https://firebasestorage.googleapis.com/v0/b/webcare-app.appspot.com/o/images%2F'+message.messageText[i]+'?alt=media” "/>'
+                        let link = await firebase.storage().ref(message.messageText[i]).getDownloadURL();
+                        imageElement +='<img style="height: 100px; width: auto;" ref="message.messageText[i]" src="'+link+'?alt=media"/>'
                       }
                     }
                   }
@@ -472,6 +475,9 @@ class AivyMessageWidget {
                   // append the message on the page
                   // document.getElementById("chat_converse").innerHTML += message;
                   $('#chat_converse-box').append(messageElement);
+               let { getStorage, ref, getDownloadURL } =  firebase.storage();
+
+               
                 })
               }
 
@@ -664,8 +670,8 @@ class AivyMessageWidget {
 
         const sentAt = new Date()
                let file = e.target.files[0];
-               let filename = guid()+ file.name.split('.').pop();
-               let storageRef = firebase.storage().ref('images/'+ filename);
+               let filename = guid()+'.'+ file.name.split('.').pop();
+               let storageRef = firebase.storage().ref('images/'+vmThis.currentGroup.id+'/'+ filename);
                let task = storageRef.put(file);
                task.on('state_changed', function progress(snapshot) {
                 let percentage = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
@@ -677,7 +683,7 @@ class AivyMessageWidget {
                },async function complete() {
            
                 const message = await messageFuncs.saveMessage(
-                  [filename],
+                  ['images/'+vmThis.currentGroup.id+'/'+ filename],
                   sentAt,
                   vmThis.currentGroup.id,
                   "image"
