@@ -24,6 +24,7 @@
 // setupCounter(document.querySelector('#counter'))
 import { CLOSE_ICON, MESSAGE_ICON, getStyles } from "./assets.js";
 
+
 function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -187,6 +188,34 @@ class AivyMessageWidget {
       toggleFab();
     });
 
+    
+
+function sendNotification(name, message) {
+  $.ajax({
+      type : 'POST',
+      url : "https://api.webcare.aivyjsc.com/api/guest/notification/send-from-widget",
+      // headers : {
+      //     Authorization : 'key=' + authorization_key
+      // },
+      contentType : 'application/json',
+      data : {
+        "to": to,
+        "data": {
+          "name": name,
+          "hostname": location.hostname,
+          "messsage": message
+         }
+      },
+      success : function(response) {
+          console.log(response);
+      },
+      error : function(xhr, status, error) {
+          console.log(xhr.error);                   
+      }
+  }); 
+}
+
+
 
     async function firebaseConnect(user, existed = false) {
       var firebaseConfig = {
@@ -209,6 +238,7 @@ class AivyMessageWidget {
       }
       // initialize database
       const db = firebase.firestore();
+      
 
       // user;
 
@@ -271,9 +301,8 @@ class AivyMessageWidget {
           })
         },
         fetchGroupByUserID(user) {
-          const vm = this
+          const vm = this;
           const groupRef = db.collection('group');
-          debugger
           return groupRef.where('members', 'array-contains', { ...user })
             .onSnapshot((querySnapshot) => {
               const allGroups = [];
@@ -288,8 +317,7 @@ class AivyMessageWidget {
               if (allGroups.length > 0) {
                 vmThis.currentGroup = allGroups[0];
               }
-            })
-            ;
+            });
           // return new Promise((resolve, reject) => {
           //   const groupRef = db.collection('group')
           //   groupRef
@@ -664,10 +692,10 @@ class AivyMessageWidget {
         }
       });
 
-                 // var uploader = document.getElementById('uploader');
-                 let fileButton =         document.getElementById('fileInput');
-                 fileButton.addEventListener('change',sendImage);
-                 async function  sendImage(e){
+    // var uploader = document.getElementById('uploader');
+    let fileButton =         document.getElementById('fileInput');
+    fileButton.addEventListener('change',sendImage);
+    async function  sendImage(e){
                
         e.preventDefault();
 
@@ -774,6 +802,10 @@ class AivyMessageWidget {
             },
           }
           groupFuncs.updateGroup(group)
+
+          let to = vmThis.currentGroup.users[1];
+          sendNotification(vmThis.curren)
+         
         }
       }
 
@@ -1045,6 +1077,7 @@ class AivyMessageWidget {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase-messaging.js"></script>
     <div id="aivy_webcare_widget">
     <div class="fabs"> 
     <div class="chat">
