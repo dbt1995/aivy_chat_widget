@@ -803,8 +803,8 @@ function sendNotification(name, message) {
           }
           groupFuncs.updateGroup(group)
 
-          let to = vmThis.currentGroup.users[1];
-          sendNotification(vmThis.curren)
+          // let to = vmThis.currentGroup.users[1];
+          sendNotification(vmThis.user.name, message)
          
         }
       }
