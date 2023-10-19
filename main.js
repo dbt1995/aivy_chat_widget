@@ -199,12 +199,9 @@ function sendNotification(name, message) {
       // },
       contentType : 'application/json',
       data : {
-        "to": to,
-        "data": {
           "name": name,
           "hostname": location.hostname,
           "messsage": message
-         }
       },
       success : function(response) {
           console.log(response);
