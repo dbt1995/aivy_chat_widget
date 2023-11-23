@@ -192,16 +192,21 @@ class AivyMessageWidget {
 
 function sendNotification(name, message) {
   $.ajax({
+      headers: { "Accept": "application/json"},
       type : 'POST',
       url : "https://api.webcare.aivyjsc.com/api/guest/notification/send-from-widget",
       // headers : {
       //     Authorization : 'key=' + authorization_key
       // },
-      contentType : 'application/json',
+      // contentType: 'application/json;charset=UTF-8',
+      crossDomain: true,
       data : {
           "name": name,
           "hostname": location.hostname,
           "messsage": message
+      },
+      beforeSend: function(xhr){
+            xhr.withCredentials = true;
       },
       success : function(response) {
           console.log(response);
@@ -801,7 +806,7 @@ function sendNotification(name, message) {
           groupFuncs.updateGroup(group)
 
           // let to = vmThis.currentGroup.users[1];
-          sendNotification(vmThis.user.name, message)
+          sendNotification(vmThis.user.name, messageText)
          
         }
       }
