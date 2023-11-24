@@ -490,8 +490,13 @@ function sendNotification(name, message) {
                   if (message.type == "image"){
                     if (message.messageText && message.messageText.length > 0){
                       for(let i =0 ; i <message.messageText.length; i++){
-                        let link = await firebase.storage().ref(message.messageText[i]).getDownloadURL();
-                        imageElement +='<img style="height: 100px; width: auto;" ref="message.messageText[i]" src="'+link+'?alt=media"/>'
+                        try {
+                          let link = await firebase.storage().ref(message.messageText[i]).getDownloadURL();
+                          imageElement +='<img style="height: 100px; width: auto;" ref="message.messageText[i]" src="'+link+'?alt=media"/>'
+                        }
+                        catch (e){
+                          console.log(e);
+                        }
                       }
                     }
                   }
