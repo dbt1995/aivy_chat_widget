@@ -476,7 +476,7 @@ function sendNotification(name, message) {
             .doc(groupId.trim())
             .collection('messages')
             .orderBy('sentAt')
-            .onSnapshot((querySnapshot) => {
+            .onSnapshot(async (querySnapshot) => {
               const allMessages = []
               querySnapshot.forEach((doc) => {
                 if (doc) allMessages.push(doc.data())
@@ -484,7 +484,8 @@ function sendNotification(name, message) {
               vmThis.messages = allMessages
               if (allMessages && allMessages.length > 0) {
                 $('#chat_converse-box').empty();
-                allMessages.forEach( async message => {
+                for(let i = 0; i < allMessages.length; i++){ 
+                  let message =allMessages[i];
                   let imageElement = '';
                   if (message.type == "image"){
                     if (message.messageText && message.messageText.length > 0){
@@ -510,7 +511,7 @@ function sendNotification(name, message) {
                let { getStorage, ref, getDownloadURL } =  firebase.storage();
 
                
-                })
+                }
               }
 
               document
