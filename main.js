@@ -188,6 +188,29 @@ class AivyMessageWidget {
       toggleFab();
     });
 
+    var modal = document.getElementById("aivy-modalBox");
+    // var images = document.getElementsByTagName('img');
+    var modalImg = document.getElementById("aivy-modalImage");
+
+    function zoomFeature(){
+      var imgElement = document.getElementById('aivy-modalImage');
+      function zoomImg(zoomScale) {
+        var pre_width = imgElement.clientWidth;
+        var pre_height = imgElement.clientHeight;
+        imgElement.style.width = (pre_width * zoomScale) + 'px';
+        imgElement.style.height = (pre_height * zoomScale) + 'px';
+      }
+    
+      $(".aivy-modal #zoomout" ).on('click', function() { zoomImg(0.5); });
+      $(".aivy-modal #zoomin" ).on('click', function() { zoomImg(1.5); });
+    }
+
+    
+
+
+
+
+
     
 
 function sendNotification(name, message) {
@@ -483,16 +506,24 @@ function sendNotification(name, message) {
               })
               vmThis.messages = allMessages
               if (allMessages && allMessages.length > 0) {
-                $('#chat_converse-box').empty();
+                // $('#chat_converse-box').empty();
                 for(let i = 0; i < allMessages.length; i++){ 
+
+
                   let message =allMessages[i];
+                  let elementId = `message-${i}`;
+                  // debugger
+                  if ($("#"+elementId).length > 0){
+                    continue;
+                  }
+
                   let imageElement = '';
                   if (message.type == "image"){
                     if (message.messageText && message.messageText.length > 0){
                       for(let i =0 ; i <message.messageText.length; i++){
                         try {
                           let link = await firebase.storage().ref(message.messageText[i]).getDownloadURL();
-                          imageElement +='<img style="height: 100px; width: auto;" ref="message.messageText[i]" src="'+link+'?alt=media"/>'
+                          imageElement +='<img class="aivy-image-chat" id="image-'+i+'" style="height: 100px; width: auto;" ref="message.messageText[i]" src="'+link+'?alt=media"/>'
                         }
                         catch (e){
                           console.log(e);
@@ -500,7 +531,7 @@ function sendNotification(name, message) {
                       }
                     }
                   }
-                  const messageElement = `<span class="${vmThis.user.uid === message.sentBy ? "chat_msg_item chat_msg_item_user" : "chat_msg_item chat_msg_item_admin"
+                  const messageElement = `<span id='${elementId}' class="${vmThis.user.uid === message.sentBy ? "chat_msg_item chat_msg_item_user" : "chat_msg_item chat_msg_item_admin"
                     }">
               
               ${vmThis.user.uid === message.sentBy ? "" : '<div class="chat_avatar"> <img src="${this.icon}"/> </div>'}
@@ -513,10 +544,38 @@ function sendNotification(name, message) {
                   // append the message on the page
                   // document.getElementById("chat_converse").innerHTML += message;
                   $('#chat_converse-box').append(messageElement);
-               let { getStorage, ref, getDownloadURL } =  firebase.storage();
+                let { getStorage, ref, getDownloadURL } =  firebase.storage();
 
-               
-                }
+                
+                  }
+
+                  var images = document.getElementsByClassName('aivy-image-chat');
+                  
+                  for (let i = 0; i < images.length; i++) {
+                    images[i].onclick = function(e) {
+                      debugger
+                      if(images[i].getAttribute("id")){
+                        return;
+                      }
+                      zoomFeature();
+                      modal.style.display = "block";
+                      modalImg.style.removeProperty('height');
+                      modalImg.style.removeProperty('width');
+                      // modalImg.style.removeProperty('object-fit');
+                      modalImg.src = this.src;
+                      modalImg.alt = this.alt;
+                    }
+                  }
+
+                $('#chat_converse-box img').each((index, item) => {
+                    if($(item).hasClass("image-viewer")){
+
+                    }
+                    else {
+                      $(item).addClass("image-viewer");
+
+                    }
+                })
               }
 
               document
@@ -1086,6 +1145,108 @@ function sendNotification(name, message) {
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase-messaging.js"></script>
+    <style>
+    
+  }
+  /* The Modal (background) */
+  .aivy-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    /* padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    align-items: center;
+    margin: 0 auto;
+  }
+  
+  .aivy-modal #modalImageContainer {
+    overflow: auto;
+    /* background: red; */
+    width: 80vw;
+    height: 80vh;
+    margin: 1% auto;
+  }
+  
+  /* Modal Content (image) */
+  .aivy-modal .modal-content {
+    margin: auto;
+    display: block;
+    /* top:10%; */
+    /* width: 80%; */
+    /* max-width: 700px; */
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.5s;
+    animation-name: zoom;
+    animation-duration: 0.5s;
+    overflow: auto;
+    position: relative;
+  }
+  
+  @-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)}
+    to {-webkit-transform:scale(1)}
+  }
+  
+  @keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+  }
+  
+  /* The Close Button */
+  .aivy-modal .close {
+    /* position: absolute; */
+    /* top: 15px; */
+    /* right: 35px; */
+    /* color: #f1f1f1; */
+    margin: 1% 1% 0 0;
+    float:right;
+    color:white;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    background-color: #190654;
+  }
+  
+  .aivy-modal .close:hover,
+  .aivy-modal .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .aivy-modal .zoomButton {
+    width: 100px;
+    height: 50px;
+    background: #190654;
+    color: white;
+    font-size: 2em;
+    border: none;
+  }
+  .aivy-modal .zoomButton:hover{
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+    
+    </style>
+    <div id="aivy-modalBox" class="aivy-modal">
+  <div>
+    <input type="button" class="close zoomButton" value="&times">
+  </div>
+  <div id="modalImageContainer">
+    <img id="aivy-modalImage" class="modal-content">
+  </div>
+  <div style="text-align:center;">
+    <!-- <input type="button" class="close button" value="&times"> -->
+    <input type="button" id="zoomin" class="zoomButton" value="+"/>
+    <input type="button" id="zoomout" class="zoomButton" value="-"/>
+  </div>
+</div>
     <div id="aivy_webcare_widget">
     <div class="fabs"> 
     <div class="chat">
