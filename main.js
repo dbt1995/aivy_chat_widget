@@ -205,6 +205,11 @@ class AivyMessageWidget {
       $(".aivy-modal #zoomin" ).on('click', function() { zoomImg(1.5); });
     }
 
+
+      document.getElementById("close-aivy-modal").onclick = function() {
+      modal.style.display = "none";
+    }
+
     
 
 
@@ -552,11 +557,12 @@ function sendNotification(name, message) {
                   var images = document.getElementsByClassName('aivy-image-chat');
                   
                   for (let i = 0; i < images.length; i++) {
+                    if(images[i].getAttribute("data-value")){
+                      continue;
+                    }
+                    images[i].setAttribute("data-value", "viewer")
                     images[i].onclick = function(e) {
-                      debugger
-                      if(images[i].getAttribute("id")){
-                        return;
-                      }
+                      // debugger
                       zoomFeature();
                       modal.style.display = "block";
                       modalImg.style.removeProperty('height');
@@ -1147,12 +1153,11 @@ function sendNotification(name, message) {
     <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase-messaging.js"></script>
     <style>
     
-  }
   /* The Modal (background) */
   .aivy-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 100001; /* Sit on top */
     /* padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
@@ -1173,7 +1178,6 @@ function sendNotification(name, message) {
     margin: 1% auto;
   }
   
-  /* Modal Content (image) */
   .aivy-modal .modal-content {
     margin: auto;
     display: block;
@@ -1186,6 +1190,7 @@ function sendNotification(name, message) {
     animation-duration: 0.5s;
     overflow: auto;
     position: relative;
+    max-width: none;
   }
   
   @-webkit-keyframes zoom {
@@ -1236,7 +1241,7 @@ function sendNotification(name, message) {
     </style>
     <div id="aivy-modalBox" class="aivy-modal">
   <div>
-    <input type="button" class="close zoomButton" value="&times">
+    <input type="button" class="close zoomButton" value="&times" id="close-aivy-modal">
   </div>
   <div id="modalImageContainer">
     <img id="aivy-modalImage" class="modal-content">
